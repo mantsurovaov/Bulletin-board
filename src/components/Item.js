@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import './Item.css';
 
+const BASE_PATH = 'http://134.209.138.34';
+const SEARCH_PATH = '/item/';
+
 const Item = ({ match }) => {
 	useEffect(() => {
 		fetchItem();
@@ -12,17 +15,18 @@ const Item = ({ match }) => {
 	});
 
 	const fetchItem = async () => {
-		const data = await fetch(`http://134.209.138.34/item/${match.params.id}`);
+		const data = await fetch(`${BASE_PATH}${SEARCH_PATH}${match.params.id}`);
 		const [item] = await data.json();
 		console.log(item);
 		setItem(item);
 	};
 
+	const { title, images, address, price, description, sellerName } = item;
 	return (
 		<div className="itemDetailed">
-			<h1>{item.title}</h1>
+			<h1>{title}</h1>
 			<Carousel>
-				{item.images.map(image => (
+				{images.map(image => (
 					<Carousel.Item>
 						<img
 							className="d-block w-100 carousel-item-img"
@@ -32,12 +36,12 @@ const Item = ({ match }) => {
 					</Carousel.Item>
 				))}
 			</Carousel>
-			<p>{item.address}</p>
+			<p>{address}</p>
 			<p>
-				<strong>{item.price}</strong>
+				<strong>{price}</strong>
 			</p>
-			<p style={{ margin: '0 20px' }}>{item.description}</p>
-			<p>{item.sellerName}</p>
+			<p style={{ margin: '0 20px' }}>{description}</p>
+			<p>{sellerName}</p>
 		</div>
 	);
 };
