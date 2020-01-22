@@ -17,7 +17,6 @@ const Item = ({ match }) => {
 	const fetchItem = async () => {
 		const data = await fetch(`${BASE_PATH}${SEARCH_PATH}${match.params.id}`);
 		const [item] = await data.json();
-		console.log(item);
 		setItem(item);
 	};
 
